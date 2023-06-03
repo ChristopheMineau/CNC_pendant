@@ -10,13 +10,20 @@ void up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void left_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void right_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
-void az_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
-void az_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
+void z_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
+void z_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void eStop_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
+void start_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void slow_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 void step_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 
-
+enum FUNCTIONS {
+        HOME = 0,
+        RWD = 1,
+        Z_INHIBIT = 2,
+        START = 3,
+        SPINDLE = 4,
+};
 
 /*
   Aduino website notes on using a Leonardo as HID:
@@ -103,61 +110,3 @@ void step_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id);
 
 */
 void press_letter(char c);
-void press_RESET();
-void press_ESC();
-void press_F2();
-void press_F3();
-void press_F4();
-void press_F5();
-void press_F6();
-void press_F7();
-void press_F8();
-void press_F9();
-void press_F10();
-void press_F11();
-void press_F12();
-void goto_MAIN_MENU();
-void goto_HOME_MENU();
-void goto_ZERO_MENU();
-void goto_AUTO_MENU();
-void goto_MACHINE_IO_MENU();
-void goto_GRAPHICS_MENU();
-void goto_JOG_MENU();
-void goto_JOG_PAD();
-void goto_USER1_MENU();
-void goto_USER2_MENU();
-void shortcut_HOME_ALL();
-void shortcut_ZERO_X();
-void shortcut_ZERO_Y();
-void shortcut_ZERO_Z();
-void shortcut_HANDWHEEL_X();
-void shortcut_HANDWHEEL_Y();
-void shortcut_HANDWHEEL_Z();
-void shortcut_HANDWHEEL_X1();
-void shortcut_HANDWHEEL_X10();
-void shortcut_HANDWHEEL_X100();
-void shortcut_TOGGLE_MDI();
-void shortcut_TOGGLE_MACHINE_COORDINATES();
-void shortcut_TOGGLE_AUX1();
-void shortcut_TOGGLE_MIST();
-void shortcut_TOGGLE_FLOOD();
-void user_MACRO_1();
-void user_MACRO_2();
-void user_MACRO_3();
-void user_MACRO_4();
-void user_MACRO_5();
-void user_MACRO_6();
-void user_MACRO_7();
-void user_MACRO_8();
-void user_MACRO_9();
-void user_MACRO_10();
-void user_MACRO_11();
-void user_MACRO_12();
-void user_MACRO_13();
-void user_MACRO_14();
-void user_MACRO_15();
-void user_MACRO_16();
-void user_MACRO_17();
-void user_MACRO_18();
-void user_MACRO_19();
-void user_MACRO_20();

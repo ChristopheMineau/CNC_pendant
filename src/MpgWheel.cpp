@@ -36,7 +36,7 @@ void MPGWheel::handle(){
         DEBUGMSG(getstatusInfo());
         switch (rotarySwitch.curState) {
             case RotarySwitch::MPG_A:
-                moveMPG(delta, KEY_HOME, KEY_END);
+                moveMPG(delta, KEY_END, KEY_HOME);
                 break;
             case RotarySwitch::MPG_X:
                 moveMPG(delta, KEY_RIGHT_ARROW, KEY_LEFT_ARROW);

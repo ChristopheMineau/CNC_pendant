@@ -5,8 +5,8 @@ class RotarySwitch {
       uint8_t analogPin;
       enum Status {
         NOP = 0,
-        JOG_XYA = 1,
-        JOG_XYZ = 2,
+        JOG_AYZ = 1,
+        FUNCTIONS = 2,
         MPG_X = 3,
         MPG_Y = 4,
         MPG_Z = 5,

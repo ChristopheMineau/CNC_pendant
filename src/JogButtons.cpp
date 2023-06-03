@@ -12,15 +12,19 @@ char azerty2qwerty(char c)
 {
   switch (c)
   {
-    case 'A':
-      return 'Q';
-    case 'Z':
-      return 'W';
+    case 'a':
+      return 'q';
+    case 'z':
+      return 'w';
+    case 'q':
+      return 'a';
+    case 'w':
+      return 'z';
     case ',':
       return 'm';
     case '?':
-      return 'M';
-    case 'M':
+      return 'm';
+    case 'm':
       return ':';
     case '1':
       return '!';
@@ -28,14 +32,14 @@ char azerty2qwerty(char c)
       return '(';
     case ';':
       return ',';
-    case '§':
-      return '?';
+    // case '§':
+    //   return '?';
     case '0':
       return ')';
     case ')':
       return '-';
-    case 'ù':
-      return '\'';
+    // case 'ù':
+    //   return '\'';
     default:
       return c;
   }
@@ -74,54 +78,101 @@ void dirKey(uint8_t k, AbleClickButton::CALLBACK_EVENT event, uint8_t id, String
   }
 }
 
-void up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_UP_ARROW, event, id, String("UP"));
+void functionKey(FUNCTIONS func, AbleClickButton::CALLBACK_EVENT event, String name) {
+  switch (event) {
+    case AbleClickButton::PRESSED_EVENT:
+      DEBUGMSG("Function Key: "+name );
+      switch (func) {
+        case FUNCTIONS::HOME:  // CTRL H : use custom screen 1024_CNCPendant.set
+          Keyboard.begin();
+          Keyboard.press(KEY_LEFT_CTRL);
+          delay(10);
+          press_letter('h'); // Warning lower case otherwise there is an additional Shift
+          break;
+        case FUNCTIONS::RWD: //Ctrl W  (standard)
+          Keyboard.begin();
+          Keyboard.press(KEY_LEFT_CTRL);
+          delay(10);
+          press_letter('w'); // Warning lower case otherwise there is an additional Shift
+          break;
+        case FUNCTIONS::Z_INHIBIT:  // CTRL I : use custom screen 1024_CNCPendant.set
+          Keyboard.begin();
+          Keyboard.press(KEY_LEFT_CTRL);
+          delay(10);
+          press_letter('i'); // Warning lower case otherwise there is an additional Shift
+          break;
+        case FUNCTIONS::SPINDLE:  // F5 (standard)
+          Keyboard.begin();
+          Keyboard.press(KEY_F5);
+          delay(10);
+          Keyboard.release(KEY_F5);
+          break;
+        case FUNCTIONS::START:
+          Keyboard.begin();
+          Keyboard.press(KEY_LEFT_ALT);
+          delay(10);
+          press_letter('r'); // Warning lower case otherwise there is an additional Shift 
+          break;
+        default: ;
+      }
+      break;
+    case AbleClickButton::RELEASED_EVENT:
+    case AbleClickButton::HELD_EVENT:
+    default: ;
+  }
+  
 }
 
-void down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_DOWN_ARROW, event, id, String("DOWN"));
+void up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
+  if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
+    functionKey(FUNCTIONS::HOME, event,  "Home"); 
+  } else {
+    dirKey(KEY_UP_ARROW, event, id, String("UP"));
+  }
+}
+
+void down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
+  if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
+    functionKey(FUNCTIONS::Z_INHIBIT, event, "Z Inhibit"); 
+  } else {
+    dirKey(KEY_DOWN_ARROW, event, id, String("DOWN"));
+  }
 }
 
 void left_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_LEFT_ARROW, event, id, String("LEFT"));
-}
-
-void right_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_RIGHT_ARROW, event, id, String("RIGHT"));
-}
-
-void az_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  switch (rotarySwitch.curState) {
-    case RotarySwitch::JOG_XYA:
-      dirKey(KEY_HOME, event, id, String("KEY_HOME")); // TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
-      break;
-    case RotarySwitch::JOG_XYZ:
-      dirKey(KEY_PAGE_UP, event, id, String("KEY_PAGE_UP"));
-      break;
-    default: ;
+  if (rotarySwitch.curState == RotarySwitch::JOG_AYZ) {
+    dirKey(KEY_HOME, event, id, String("KEY_HOME")); // A axis, TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
+  } else if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
+    functionKey(FUNCTIONS::RWD, event, "Rewind");
+  } else {
+    dirKey(KEY_LEFT_ARROW, event, id, String("LEFT"));
   }
 }
 
-void az_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  switch (rotarySwitch.curState) {
-    case RotarySwitch::JOG_XYA:
-      dirKey(KEY_END, event, id, String("KEY_END"));  // TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
-      break;
-    case RotarySwitch::JOG_XYZ:
-      dirKey(KEY_PAGE_DOWN, event, id, String("KEY_PAGE_DOWN"));
-      break;
-    default: ;
+void right_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){ 
+  if (rotarySwitch.curState == RotarySwitch::JOG_AYZ) {
+    dirKey(KEY_END, event, id, String("KEY_END")); // A axis, TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
+  } else if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
+    functionKey(FUNCTIONS::SPINDLE, event, "Spindle");
+  } else {
+    dirKey(KEY_RIGHT_ARROW, event, id, String("RIGHT"));
   }
+}
+
+void z_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
+  dirKey(KEY_PAGE_UP, event, id, String("KEY_PAGE_UP"));
+}
+
+void z_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
+  dirKey(KEY_PAGE_DOWN, event, id, String("KEY_PAGE_DOWN"));
 }
 
 void eStop_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
   static bool held;
   if (event==AbleClickButton::HELD_EVENT) {  // appui long
-      DEBUGMSG(String("START : ") + event +" ID : " + id); 
+      DEBUGMSG(String("HOLD : ") + event +" ID : " + id); 
       Keyboard.begin();
-      Keyboard.press(KEY_LEFT_ALT);
-      delay(10);
-      press_letter('r'); // Warning lower case otherwise there is an additional Shift 
+      press_letter(' '); // Warning lower case otherwise there is an additional Shift 
       held = true;
   } else if (event==AbleClickButton::RELEASED_EVENT) {  
     if (held)
@@ -134,6 +185,10 @@ void eStop_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
       press_letter('s');    // Warning lower case otherwise there is an additional Shift    
     }
   }
+}
+
+void start_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
+  functionKey(FUNCTIONS::START, event, "Start"); 
 }
 
 void slow_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  

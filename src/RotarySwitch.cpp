@@ -24,9 +24,9 @@ void RotarySwitch::handle() {
     if (isAbout(value, 0))
         this->curState = Status::NOP;
     else if (isAbout(value, 168))
-        this->curState = Status::JOG_XYA;
+        this->curState = Status::JOG_AYZ;
     else if (isAbout(value, 339))
-        this->curState = Status::JOG_XYZ;
+        this->curState = Status::FUNCTIONS;
     else if (isAbout(value, 510))
         this->curState = Status::MPG_X;
     else if (isAbout(value, 681))
