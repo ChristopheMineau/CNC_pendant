@@ -78,129 +78,87 @@ void dirKey(uint8_t k, AbleClickButton::CALLBACK_EVENT event, uint8_t id, String
   }
 }
 
-void functionKey(FUNCTIONS func, AbleClickButton::CALLBACK_EVENT event, String name) {
-  switch (event) {
-    case AbleClickButton::PRESSED_EVENT:
-      DEBUGMSG("Function Key: "+name );
-      switch (func) {
-        case FUNCTIONS::HOME:  // CTRL H : use custom screen 1024_CNCPendant.set
-          Keyboard.begin();
-          Keyboard.press(KEY_LEFT_CTRL);
-          delay(10);
-          press_letter('h'); // Warning lower case otherwise there is an additional Shift
-          break;
-        case FUNCTIONS::RWD: //Ctrl W  (standard)
-          Keyboard.begin();
-          Keyboard.press(KEY_LEFT_CTRL);
-          delay(10);
-          press_letter('w'); // Warning lower case otherwise there is an additional Shift
-          break;
-        case FUNCTIONS::Z_INHIBIT:  // CTRL I : use custom screen 1024_CNCPendant.set
-          Keyboard.begin();
-          Keyboard.press(KEY_LEFT_CTRL);
-          delay(10);
-          press_letter('i'); // Warning lower case otherwise there is an additional Shift
-          break;
-        case FUNCTIONS::SPINDLE:  // F5 (standard)
-          Keyboard.begin();
-          Keyboard.press(KEY_F5);
-          delay(10);
-          Keyboard.release(KEY_F5);
-          break;
-        case FUNCTIONS::START:
-          Keyboard.begin();
-          Keyboard.press(KEY_LEFT_ALT);
-          delay(10);
-          press_letter('r'); // Warning lower case otherwise there is an additional Shift 
-          break;
-        default: ;
-      }
-      break;
-    case AbleClickButton::RELEASED_EVENT:
-    case AbleClickButton::HELD_EVENT:
-    default: ;
-  }
-  
-}
-
 void up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
-    functionKey(FUNCTIONS::HOME, event,  "Home"); 
-  } else {
-    dirKey(KEY_UP_ARROW, event, id, String("UP"));
+  switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_XAZ:
+      dirKey(KEY_HOME, event, id, String("KEY_HOME")); // A+ axis, TO BE PROGRAMMED Home key
+      break;
+    case RotarySwitch::JOG_AYZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_UP_ARROW, event, id, String("UP"));
   }
 }
 
 void down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
-  if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
-    functionKey(FUNCTIONS::Z_INHIBIT, event, "Z Inhibit"); 
-  } else {
-    dirKey(KEY_DOWN_ARROW, event, id, String("DOWN"));
+    switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_XAZ:
+      dirKey(KEY_END, event, id, String("KEY_END")); // A- axis, TO BE PROGRAMMED End key
+      break;
+    case RotarySwitch::JOG_AYZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_DOWN_ARROW, event, id, String("DOWN"));
   }
 }
 
 void left_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  if (rotarySwitch.curState == RotarySwitch::JOG_AYZ) {
-    dirKey(KEY_HOME, event, id, String("KEY_HOME")); // A axis, TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
-  } else if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
-    functionKey(FUNCTIONS::RWD, event, "Rewind");
-  } else {
-    dirKey(KEY_LEFT_ARROW, event, id, String("LEFT"));
+  switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_AYZ: 
+      dirKey(KEY_END, event, id, String("KEY_END")); // A- axis, TO BE PROGRAMMED End key
+      break;
+    case RotarySwitch::JOG_XAZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_LEFT_ARROW, event, id, String("LEFT"));
   }
 }
 
-void right_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){ 
-  if (rotarySwitch.curState == RotarySwitch::JOG_AYZ) {
-    dirKey(KEY_END, event, id, String("KEY_END")); // A axis, TO BE PROGRAMMED IN MACH3 "Config/HotKeys"
-  } else if (rotarySwitch.curState == RotarySwitch::FUNCTIONS) {
-    functionKey(FUNCTIONS::SPINDLE, event, "Spindle");
-  } else {
-    dirKey(KEY_RIGHT_ARROW, event, id, String("RIGHT"));
+void right_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
+  switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_AYZ: 
+      dirKey(KEY_HOME, event, id, String("KEY_HOME")); // A+ axis, TO BE PROGRAMMED Home key
+      break;
+    case RotarySwitch::JOG_XAZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_RIGHT_ARROW, event, id, String("RIGHT"));
   }
 }
 
-void z_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_PAGE_UP, event, id, String("KEY_PAGE_UP"));
+void z_up_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){ 
+  switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_AYZ: 
+    case RotarySwitch::JOG_XAZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_PAGE_UP, event, id, String("KEY_PAGE_UP"));
+  } 
 }
 
-void z_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  dirKey(KEY_PAGE_DOWN, event, id, String("KEY_PAGE_DOWN"));
-}
-
-void eStop_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
-  static bool held;
-  if (event==AbleClickButton::HELD_EVENT) {  // appui long
-      DEBUGMSG(String("HOLD : ") + event +" ID : " + id); 
-      Keyboard.begin();
-      press_letter(' '); // Warning lower case otherwise there is an additional Shift 
-      held = true;
-  } else if (event==AbleClickButton::RELEASED_EVENT) {  
-    if (held)
-      held = false;
-    else {
-      DEBUGMSG(String("STOP : ") + event +" ID : " + id); // simple click
-      Keyboard.begin();
-      Keyboard.press(KEY_LEFT_ALT);
-      delay(100);
-      press_letter('s');    // Warning lower case otherwise there is an additional Shift    
-    }
-  }
-}
-
-void start_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  functionKey(FUNCTIONS::START, event, "Start"); 
+void z_down_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){
+  switch(rotarySwitch.curState){
+    case RotarySwitch::NOP:
+      break;
+    case RotarySwitch::JOG_AYZ: 
+    case RotarySwitch::JOG_XAZ:
+    case RotarySwitch::JOG_XYZ:
+    default:
+      dirKey(KEY_PAGE_DOWN, event, id, String("KEY_PAGE_DOWN"));
+  } 
 }
 
 void slow_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
   DEBUGMSG(String("SLOW : ") + event +" ID : " + id);
 }
 
-void step_button_action(AbleClickButton::CALLBACK_EVENT event, uint8_t id){  
-  DEBUGMSG(String("STEP : ") + event +" ID : " + id);
-    if (event==AbleClickButton::PRESSED_EVENT) {
-      Keyboard.begin();
-      Keyboard.press(KEY_LEFT_ALT);
-      delay(100);
-      press_letter('j');  // Warning lower case otherwise there is an additional Shift
-  }
-}

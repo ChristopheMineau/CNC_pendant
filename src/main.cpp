@@ -32,10 +32,7 @@ AbleClickButton left_button(LEFT_BUTTON_PIN, left_button_action);
 AbleClickButton right_button(RIGHT_BUTTON_PIN, right_button_action);
 AbleClickButton z_up_button(Z_UP_BUTTON_PIN, z_up_button_action);
 AbleClickButton z_down_button(Z_DOWN_BUTTON_PIN, z_down_button_action);
-AbleClickButton eStop_button(ESTOP_BUTTON_PIN, eStop_button_action);
-AbleClickButton start_button(START_BUTTON_PIN, start_button_action);
 AbleClickButton slow_button(SLOW_BUTTON_PIN, slow_button_action);
-AbleClickButton step_button(STEP_BUTTON_PIN, step_button_action);
 
 AbleClickButton *btns[] = {
   &up_button,
@@ -43,11 +40,8 @@ AbleClickButton *btns[] = {
   &left_button,
   &right_button,
   &z_up_button,
-  &z_down_button,  
-  &eStop_button,
-  &start_button,
+  &z_down_button,
   &slow_button,
-  &step_button
 };
 AbleClickButtonList btnList(btns);
 RotarySwitch rotarySwitch(ROTARY_SWITCH_PIN);

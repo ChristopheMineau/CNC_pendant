@@ -23,21 +23,23 @@ void RotarySwitch::handle() {
 
     if (isAbout(value, 0))
         this->curState = Status::NOP;
-    else if (isAbout(value, 168))
+    else if (isAbout(value, 144))
+        this->curState = Status::JOG_XAZ;
+    else if (isAbout(value, 290))
         this->curState = Status::JOG_AYZ;
-    else if (isAbout(value, 339))
-        this->curState = Status::FUNCTIONS;
-    else if (isAbout(value, 510))
+    else if (isAbout(value, 436))
+        this->curState = Status::JOG_XYZ;
+    else if (isAbout(value, 583))
         this->curState = Status::MPG_X;
-    else if (isAbout(value, 681))
+    else if (isAbout(value, 729))
         this->curState = Status::MPG_Y;
-    else if (isAbout(value, 852))
+    else if (isAbout(value, 876))
         this->curState = Status::MPG_Z;
     else if (isAbout(value, 1023))
         this->curState = Status::MPG_A;
     else this->curState = Status::NOP;
 
-   //  Serial.println(String("RotarySwitch::handle(): value=")+value+" State=" + this->curState);
+   //Serial.println(String("RotarySwitch::handle(): value=")+value+" State=" + this->curState);
 }
 
 String RotarySwitch::getstatusInfo() {
