@@ -82,3 +82,7 @@ https://www.amazon.com/100PPR-Driver-Output-Wheel-Encoder/dp/B01EA9I5LW
 | MPG Y| Wheel CW/ACW | Y axis + / Y axis - | Ctrl+up arrow / Ctrl+down arrow |
 | MPG Z| Wheel CW/ACW | Z axis + / Z axis - | Ctrl+PgUp / Ctrl+PgDown |
 | MPG A| Wheel CW/ACW | A axis + / A axis - | Ctrl+Home / Ctrl+End |
+
+# Build / Upload
+
+I personnaly use Visual Studio Code + Platform IO extension to work with Arduino boards.
