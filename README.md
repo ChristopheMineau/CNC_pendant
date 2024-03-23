@@ -14,14 +14,14 @@ Selector Wirering:
 | ---- | ----------- |  ----------- | ----------- |
 | Common | A0 analog input | 0<1023 |  |
 |Pin 1 | GND | 0 | NOP |
-|Pin 1 | 4.7 KOhm resistor to Pin 2 | 144 | JOG_XAZ |
-|Pin 2 | 4.7 KOhm resistor to Pin 3 | 290 | JOG_AYZ |
-|Pin 3 | 4.7 KOhm resistor to Pin 4 | 436 | JOG_XYZ |
-|Pin 4 | 4.7 KOhm resistor to Pin 5 | 583 | MPG_X |
-|Pin 5 | 4.7 KOhm resistor to Pin 6 | 729 | MPG_Y |
-|Pin 6 | 4.7 KOhm resistor to Pin 7 | 876 | MPG_Z |
-|Pin 7 | 4.7 KOhm resistor to Pin 8 | 1023 | MPG_A |
-|Pin 7 | 5V | 1023 |  |
+|Pin 1 | 4.7 KOhm resistor to Pin 2 | 0 | NOP |
+|Pin 2 | 4.7 KOhm resistor to Pin 3 | 144 | JOG_XAZ |
+|Pin 3 | 4.7 KOhm resistor to Pin 4 | 290 | JOG_AYZ |
+|Pin 4 | 4.7 KOhm resistor to Pin 5 | 436 | JOG_XYZ |
+|Pin 5 | 4.7 KOhm resistor to Pin 6 | 583 | MPG_X |
+|Pin 6 | 4.7 KOhm resistor to Pin 7 | 729 | MPG_Y |
+|Pin 7 | 4.7 KOhm resistor to Pin 8 | 876 | MPG_Z |
+|Pin 8 | 5V | 1023 | MPG_A |
 |Pin 8 < Pin 12 | GND | 0 | NOP |
 
 ## Encoder Wheel
