@@ -1,5 +1,7 @@
 # CNC Pendant for Mach3 / SimCNC / any CNC controler software that accepts keyboard shortcuts
 
+![Christophe Mineau CNC Pendant](pics/CNC_Pendant_V2_10.jpg)
+
 ## Implementation :
 - Arduino pro micro / USB connected
 - 7 x push buttons
@@ -10,6 +12,9 @@
 In order to save digital I/O pins on the arduino, the rotary selector output is an analog signal and
 is connected to Analog inpit 0
 Selector Wirering:
+
+![Christophe Mineau CNC Pendant](pics/detail_rotary_ladder.png)
+
 | Pin | Connection | measured value | Function |
 | ---- | ----------- |  ----------- | ----------- |
 | Common | A0 analog input | 0<1023 |  |
@@ -46,6 +51,9 @@ https://www.amazon.com/100PPR-Driver-Output-Wheel-Encoder/dp/B01EA9I5LW
 | Z_UP | Digital in 8 |
 | Z_DOWN | Digital in 9 |
 | SLOW_BUTTON | Digital in 16 |
+
+
+![Christophe Mineau CNC Pendant](pics/CNC_Pendant_V2_08.jpg)
 
 # Usage
 
@@ -86,3 +94,9 @@ https://www.amazon.com/100PPR-Driver-Output-Wheel-Encoder/dp/B01EA9I5LW
 # Build / Upload
 
 I personnaly use Visual Studio Code + Platform IO extension to work with Arduino boards.
+
+# More Info
+
+This tool was published to the online tool Encyclopedia homematetools.net :
+See :
+https://www.homemadetools.net/forum/cnc-pendant-101174
